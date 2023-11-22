@@ -4,7 +4,7 @@ Deep-learning models like Convolutional Neural Networks (CNN) and Graph Convolut
 
 In this section , we give a formal definition of point clouds and the attacker's goal. 
 
-We define input source samples {$X_S^{2D},X_S^{3D},Y_S^{3D}\in\mathscr{S}$} and target samples{$X_T^{2D},X_T^{3D}\in\mathscr{T}$}.  where $X^{2D}$ represents the image and $X^{3D}$ represents the corresponding point cloud,  with 3D points in the camera reference frame.  A point cloud can be defined as a set of N points,  i.e. $\{p_i\}_{i=1}^N$.  Where each points $p_i=(pos_x,pos_y,pos_z)$ present the location information of received point . 
+We define input source samples ${X_S^{2D},X_S^{3D},Y_S^{3D}\in\mathscr{S}}$ and target samples ${X_T^{2D},X_T^{3D}\in\mathscr{T}}$.  where $X^{2D}$ represents the image and $X^{3D}$ represents the corresponding point cloud,  with 3D points in the camera reference frame.  A point cloud can be defined as a set of N points,  i.e. $\{p_i\}_{i=1}^N$.  Where each points $p_i=(pos_x,pos_y,pos_z)$ present the location information of received point . 
 
 Note that $X^{3D}$ contains only points visible from the RGB camera,  assuming that the calibration of the LiDAR and Camera is available for both domains and does not change over time.
 
