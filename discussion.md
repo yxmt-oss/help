@@ -40,9 +40,9 @@ we consider LiDAR spoofing attack , assume the attacker has white-box access to 
 
 Attacking moving vehicle
 
-![image-20231122145215889](C:\Users\rio smith\AppData\Roaming\Typora\typora-user-images\image-20231122145215889.png)
+![image-1](images/image-1.png)
 
-![image-20231122145348028](C:\Users\rio smith\AppData\Roaming\Typora\typora-user-images\image-20231122145348028.png)
+![image-2](images/image-2.png)
 
 **攻击的是任务域数据还是源域数据？**
 
