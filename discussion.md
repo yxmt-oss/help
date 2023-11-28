@@ -1,8 +1,14 @@
 Deep-learning models like Convolutional Neural Networks (CNN) and Graph Convolutional Network(GCN) are often used in 3D point cloud processing. Some existing work tend to explore the robustness of 3D PCSS models by generating and using adversarial attack. While in the real world autonomous driving scene, a set of sensors may be using to help detect the driving environment. As for security analysis, we assume the attacker has white-box access to the driving related sensor  messages, include 2D images and 3D point clouds usually used in objective recognition and semantic segmentation which is very useful for self-driving decision. In this paper we consider different domain learning complement information to help improve the performance under attack.
 
-**Problem Definition**
+## **Problem Definition**
 
-In this section , we give a formal definition of point clouds and the attacker's goal. 
+```latex
+In this section, We define input source samples \(X_S^{2D}, X_S^{3D}, Y_S^{3D} \in \mathscr{S}\) and target samples \(X_T^{2D}, X_T^{3D} \in \mathscr{T}\), where \(X^{2D}\) represents the image and \(X^{3D}\) represents the corresponding point cloud with 3D points in the camera reference frame. A point cloud can be defined as a set of \(N\) points, i.e., \(\{p_i\}_{i=1}^N\), where each point \(p_i = (pos_x, pos_y, pos_z)\) presents the location information of the received point.
+Note that \(X^{3D}\) contains only points visible from the RGB camera, assuming that the calibration of the LiDAR and Camera is available for both domains and does not change over time.
+Given the samples of the source domain \(\mathscr{S}\) and target domain \(\mathscr{T}\), we intend to learn a function \(f: \mathscr{S} \cup \mathscr{T} \rightarrow Y_T^{3D}\) for 3D semantic segmentation in the target domain.
+```
+
+In this section , we give a formal definition of point clouds and the attacker's goal.  
 
 We define input source samples ${X_S^{2D},X_S^{3D},Y_S^{3D}\in\mathscr{S}}$ and target samples ${X_T^{2D},X_T^{3D}\in\mathscr{T}}$.  where $X^{2D}$ represents the image and $X^{3D}$ represents the corresponding point cloud,  with 3D points in the camera reference frame.  A point cloud can be defined as a set of N points,  i.e. $\{p_i\}_{i=1}^N$.  Where each points $p_i=(pos_x,pos_y,pos_z)$ present the location information of received point . 
 
@@ -12,15 +18,19 @@ Given the samples of source domain $\mathscr{S}$and target domain $\mathscr{T}$,
 
 
 
-**Attack goal**
+### **Attack goal**
 
 we consider LiDAR spoofing attack , assume the attacker has white-box access to the machine learning model and the perception system. We consider this threat model reasonable since the attacker could access by additional engineering efforts to reverse engineering the software.
 
 
 
+## Scene
+
 ”无地图区域，雷达信号弱的区域“ 语义分割主导地位
 
 
+
+## Discussion
 
 **为什么只攻击点云数据，不攻击2D image数据?**
 
@@ -74,8 +84,19 @@ Uni-modal->Multi-modal
 
 1、 存在对抗样本生成攻击方式，在模型和源数据
 
-2、过敏？攻击未发生情况
+2、过敏？攻击未发生情况 
+
+3、防御策略相关：进行对抗训练使用数据增强（random resizing and padding with a given probability）
+
+语义分割模型$\rightarrow$分类模型(point-wise)
+
+攻击策略：
+
+基于白盒攻击模型（模型参数和源域数据已知的情况）。在源域3D点云数据，点云类别标签，源域模型已知的情况下（通常黑客也可以通过额外的工作类似于逆向工程来获取系统信息）进行对抗训练得到对抗样本；通过在任务域（无标签）叠加对抗样本来实现攻击(attack objective)。
+
+防御策略：
+
+1、利用类似于X-MUDA模型（cross-domain,cross-modal）学习不同模态信息来进行防御，（多传感器融合作为一种防御策略的可行性）
 
 
 
-1、point cloud attack under uni-modal ，access to source samples {$X_S^{2D},X_S^{3D},Y_S^{3D}\in\mathscr{S}$} ;  defense by multi-modal.
