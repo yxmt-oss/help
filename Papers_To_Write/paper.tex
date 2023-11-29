@@ -1,5 +1,5 @@
 \documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
+\IEEEoverridecommandlockouts{}
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts,mathrsfs}
@@ -53,44 +53,47 @@ Regarding the attack strategy, 3D data $(\mathcal{X}_S^{3D}, \mathcal{Y}_S^{3D})
 
 Concerning the defense strategy, within the newly introduced 2D head, we utilize 2D data from the source domain as input to a 2D network. Feature extraction is performed, and an adversarial strategy is employed to deceive the discriminator, compelling the image features from both domains to possess similar distributions. By introducing 2D data, the model's robustness is enhanced, reducing the sensitivity of the 3D component to attacks and thereby achieving defense.
 
+To this end, the attacker tries to attack the offline 3D Point Cloud Semantic Segmentation (PCSS) model loaded on the autonomous vehicle with adversarial samples. In this case, The 2D images collected by the image sensors are utilized in the training process help to prevent the possible white-box attack. 
+
 To this end, We first consider attacking the source domain point cloud data in the UDA framework of Cosmix [paper]. In the context where the source domain 3D point cloud data, point cloud category labels, and source domain model parameters are all ascertainable, adversarial training is conducted to generate adversarial samples. Subsequently, these adversarial samples are superimposed onto the target domain to execute the attack. Following this, an additional 2D semantic segmentation head is integrated into the original framework, analogous to the installation of a camera on a vehicle in real-world scenarios. Through the fusion and processing of data from multiple sensors, effective defense against such attacks can be achieved.
 
 
 \subsection{Attack Formulation}
-Below we formalize the attack goals as generalized used in adversarial attack.[paper]. The segmentation model is used to mapping the input point cloud $X=\{x_i|i=1{\ldots}N,x_i\in\mathcal{X}_S^{3D}\}$ to the labels of all points $Y=\{y_i|i=1{\ldots}N,y_i\in \mathcal{Y}_S^{3D}\}$. $\mathcal{X}$ is the real-time points  sampled by the LiDAR system and sent to the semantic segmentation system, while $\mathcal{Y}$ is a set of feasible labels using in classification. We have established methodologies based on norm-bounded principles for both targeted and untargeted attacks, highlighting potential limitations in the attack scenarios. It is worth noting that encountering limitations in attacks is a commonplace occurrence in real-life situations.
+Below we formalize the attack goals as generalized used in adversarial attack [paper]. The Point Cloud Semantic Segmentation (PCSS) model is used to mapping the input point cloud $X=\{x_i|i=1{\ldots}N,x_i\in\mathcal{X}_S^{3D}\}$ to the labels of all points $Y=\{y_i|i=1{\ldots}N,y_i\in \mathcal{Y}_S^{3D}\}$. $\mathcal{X}$ is the real-time points  sampled by the LiDAR system in the target domain and sent to the semantic segmentation system, while $\mathcal{Y}$ is a set of feasible labels using in classification. We have established methodologies based on norm-bounded principles mentioned in [paper] for both targeted and untargeted attacks, highlighting potential limitations in the attack scenarios. It is worth noting that encountering limitations in attacks is a commonplace occurrence in real-life situations.
 
 \subsection{Thread Model}
-$1$. Adversary's goals. We examine the LiDAR spoofing attack, assuming the attacker has white-box access to both the machine learning model and the perception system. The attacker's objective is to manipulate the semantic segmentation results obtained from PCSS models deployed in autonomous proxies such as vehicles and delivery robots, occurring in both indoor or outdoor scenarios.
+$1$. Attacker's goals. We examine the LiDAR spoofing attack, assuming the attacker has white-box access to both the machine learning model and the perception system. The attacker's objective is to manipulate the semantic segmentation results obtained from PCSS models deployed in autonomous proxies such as vehicles and delivery robots, occurring in both indoor or outdoor scenarios.
 
-The attacker is inclined to pre-train and employ adversarial samples for executing the attack, with limitations on the attack's effectiveness in cases where the attacker aims for imperceptibility. We find this threat model plausible, as attackers could gain access to the perception system and source data through additional engineering efforts, such as reverse engineering the software via the Internet or hardware hacking.
+To launch an attack on a sequence of point clouds, the attacker is inclined to pre-train and utilize adversarial samples for executing the attack. There are norm-bounded limitations on the effectiveness of the attack, especially when the attacker aims for imperceptibility. We consider this threat model plausible, as attackers could potentially access the perception system and source data through additional engineering efforts, such as reverse engineering the software via the Internet or hardware hacking.
 
 In this paper, we delve into two types of attacks: Targeted Attacks and Untargeted Attacks, both of which have proven to be effective in prior studies. 
 
-$2$. Targeted Attack. In this scenario, the attacker has access to both the target data and the semantic segmentation results for the target domain. This exposes information about the target objects, including their specific informations like relative location. Consequently, the attacker can selectively choose a specific subset of attack points denoted as $X_{\mathcal{T}}=\{x_{i}|i\in{\mathcal{T}},x_{i}\in \mathcal{X}\}$. Here, $\mathcal{T}$ represents the indices of the items that the attacker intends to manipulate the predicted labels for, denoted as $Y_\mathcal{T}=\{y_i|i\in \mathcal{T},y_i\in{\mathcal{Y}}\}$. The indices in $\mathcal{T}$ are randomly selected before the adversarial training process, assuming the attacker does not possess global information about the entire point cloud, thereby generating adversarial samples.
+$2$. Targeted Attack. In this scenario, the attacker has access to both the target data and the semantic segmentation results for the target domain. This exposes information about the target objects, including their specific information like relative location. Consequently, the attacker can selectively choose a specific subset of attack points denoted as $X_{\mathcal{T}}=\{x_{i}|i\in{\mathcal{T}},x_{i}\in \mathcal{X}\}$. Here, $\mathcal{T}$ represents the indices of the items that the attacker intends to manipulate the predicted labels for, denoted as $Y_\mathcal{T}=\{y_i|i\in \mathcal{T},y_i\in{\mathcal{Y}}\}$. 
 
-For a point $x_i=\{p_i\}$, we assume that the attacker conducts the model attack by perturbing the coordinates of the point, subject to necessary constraints. This perturbation involves the generalized investigation of point cloud coordinate perturbations. The perturbation values on the original points are represented as $R=\{r_i|i\in \mathcal{T}\}$, and the new point cloud is defined as $X'=\{x_i|i\notin \mathcal{T},x_i\in \mathcal{X}\}+\{x_i+i_r|i\in \mathcal{T},x_i\in \mathcal{X}\}$, where $r_i=r_{p_i}$ represents the coordinate perturbation on the 3D coordinates.
+For a point $x_i=\{p_i\}$, we assume that the attacker conducts the model attack by perturbing the coordinates of the point, subject to necessary constraints. This perturbation involves the generalized investigation of point cloud coordinate perturbations. The perturbation values on the original points are represented as $R=\{r_i|i\in \mathcal{T}\}$, and the new point cloud is defined as $X'=\{x_i|i\notin \mathcal{T},x_i\in \mathcal{X}\}+\{x_i+r_i|i\in \mathcal{T},x_i\in \mathcal{X}\}$, where $r_i=r_{p_i}$ represents the coordinate perturbation on the 3D coordinates.
 
-In this case, the attacker tries to minimize the difference between the predicted labels on $X_\mathcal{T}$ and the targeted labels $Y_T$, while the perturbation is bounded by $\epsilon $. The attack goal can be formalized as:
+In this case, the attacker tries to minimize the difference between the predicted labels on $X_\mathcal{T}$ and the targeted labels $Y_\mathcal{T}$, while the perturbation is bounded by $\epsilon $. The attack goal can be formalized as:
 
 \begin{equation}
-\mathop{\mathrm{argmin}}_{R}\mathcal{L}_{T}(X^{\prime},Y_{\mathcal{T}}),\mathrm{s.t.}\mathcal{D}(R)\leq\epsilon    
+\mathop{\mathrm{argmin}}_{R}\mathcal{L}_{T}(X^{\prime},Y_{\mathcal{T}}),\quad \mathrm{s.t.}\mathcal{D}(R,\mathcal{X})\leq\epsilon    
 \end{equation}
 
 
 where $D(\cdot)$ is the distance function measuring the magnitude of the perturbation $R$ and $\mathcal{L}_T(\cdot)$ is the adversarial loss that measures the effectiveness of the attack. 
 
-$3$. Untargeted Attack. In this Scenario,  the attack target does not have a specific target $Y_\mathcal{T}$, but affect the predict labels  $F_{\theta}(X_\mathcal{T})$ of target attack points to be different from the ground-truth labels $Y_\mathcal{T}$ of  all the target points in $X_\mathcal{T}$, we follow the settings of [paper] and noted the labels as $Y_{G\mathcal{T}}$. While in the untargeted attack, we adjust the the loss Equation as:
+$3$. Untargeted Attack. In this Scenario, the attacker tries to degrade the 3D PCSS performance which cause a totally different labels from the original predict labels. The attack target does not have a specific target $Y_\mathcal{T}$, but affect the predict labels  $F_{\theta}(X_\mathcal{T})$ of target attack points to be different from the ground-truth labels $Y_\mathcal{T}$ terms as  $Y_{G\mathcal{T}}$ of  all the target points in $X_\mathcal{T}$. While in the untargeted attack, we adjust the the loss Equation as:
 
 \begin{equation}
-\mathop{\mathrm{argmax}}_{R}\mathcal{L}_{NT}(X^{\prime},Y_{G\mathcal{T}}),\mathrm{s.t.}\mathcal{D}(R)\leq\epsilon    
+\mathop{\mathrm{argmax}}_{R}\mathcal{L}_{NT}(X^{\prime},Y_{G\mathcal{T}}),\quad \mathrm{s.t.}\mathcal{D}(R,\mathcal{X})\leq\epsilon    
 \end{equation}
 
 where $\mathcal{L}_{NT}(\cdot)$ is the adversarial loss that relate with $Y_{G\mathcal{T}}$, For setting a differentiable Loss function with the constraint, we reformulate the Equation 2 to enable gradient-based optimization by introducing $\mathcal{L}_{NT}(X^{\prime},Y_{G\mathcal{T}})$ to replace the constraint. A smooth regularization $S(X')$ is set to make the perturbation point more imperceptible.
 
 
 \subsection{The Defense Strategy}
+To alleviate the threat from the proposed white-box adversarial attack, various methods have been proposed by former work not only in 2D image but also in 3D point cloud. Gradient obfuscation, adversarial training, and anomaly detection have been initially tested on image classification which can be also tested on PCSS model [paper]. In the [paper], several possible adversarial attack defense strategy have been proposed to help prevent real AV attack, like Sensor-Level Defenses and Machine Learning Model-level Defense\ldots
 
-
+Here, we present our defence strategy by utilizing the 2D target domain image header. The 2D header is learned by a machine leaning framework with the images captured in real-time by autonomous driving systems. So here comes the question? How to effectively use the complementary information between these two hetegeneous domain. And, how  
 
 
 

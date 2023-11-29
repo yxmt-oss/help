@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.22)  28 NOV 2023 22:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.22)  29 NOV 2023 18:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -301,15 +301,15 @@ Before submitting the final camera ready copy, remember to:
 
 [2] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 4220 strings out of 476025
- 67262 string characters out of 5786530
- 1867382 words of memory out of 5000000
- 24637 multiletter control sequences out of 15000+600000
+ 4221 strings out of 476025
+ 67278 string characters out of 5786530
+ 1866382 words of memory out of 5000000
+ 24638 multiletter control sequences out of 15000+600000
  543848 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,62p,911b,255s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,62p,889b,255s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/software/LATAX/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (2 pages, 138169 bytes).
+Output written on paper.pdf (2 pages, 139316 bytes).
 PDF statistics:
  72 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream
